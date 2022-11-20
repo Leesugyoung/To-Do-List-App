@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 // import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -11,16 +12,25 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  height: 15vh;
+  height: 20vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+`;
+
+const Desc = styled.p`
+  margin-top: 20px;
+  color: ${props => props.theme.textColor};
+  font-size: 13px;
 `;
 
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
+  background-color: #ffffff;
   color: ${props => props.theme.bgColor};
   border-radius: 15px;
   margin-bottom: 10px;
@@ -32,24 +42,15 @@ const Coin = styled.li`
   }
   &:hover {
     a {
-      color: ${props => props.theme.accentColor};
+      color: #f15353;
     }
   }
 `;
 
-interface ICoin {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  is_new: boolean;
-  is_active: boolean;
-  type: string;
-}
-
 const Title = styled.h1`
-  color: ${props => props.theme.accentColor};
-  font-size: 48px;
+  color: ${props => props.theme.textColor};
+  font-size: 50px;
+  font-weight: bold;
 `;
 
 const Loader = styled.div`
@@ -61,6 +62,16 @@ const Img = styled.img`
   height: 35px;
   margin-right: 10px;
 `;
+
+interface ICoin {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+}
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
@@ -76,27 +87,36 @@ function Coins() {
     })();
   }, []); */
   return (
-    <Container>
-      <Header>
-        <Title>코인</Title>
-      </Header>
-      {isLoading ? (
-        <Loader>Loading...</Loader>
-      ) : (
-        <CoinsList>
-          {data?.slice(0, 100).map(coin => (
-            <Coin key={coin.id}>
-              <Link to={`/${coin.id}`} state={coin}>
-                <Img
-                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
-                />
-                {coin.name} &rarr;
-              </Link>
-            </Coin>
-          ))}
-        </CoinsList>
-      )}
-    </Container>
+    <>
+      <Container>
+        <Helmet>
+          {/* react-helmet 사용 */}
+          <title>Crypto Tracker</title>
+        </Helmet>
+        <Header>
+          <Title>
+            <span style={{ color: "#fcff9d" }}>🪙Crypto</span> Tracker
+          </Title>
+          <Desc>Choose your coin out of a total of 100 cryptocurrencies!</Desc>
+        </Header>
+        {isLoading ? (
+          <Loader>Loading...</Loader>
+        ) : (
+          <CoinsList>
+            {data?.slice(0, 100).map(coin => (
+              <Coin key={coin.id}>
+                <Link to={`/${coin.id}`} state={coin}>
+                  <Img
+                    src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  />
+                  {coin.name} &rarr;
+                </Link>
+              </Coin>
+            ))}
+          </CoinsList>
+        )}
+      </Container>
+    </>
   );
 }
 export default Coins;

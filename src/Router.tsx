@@ -6,6 +6,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* nested route 으로 자식 route 는 상대경로로 작성한다. */}
         <Route path="/" element={<Coins />}></Route>
         <Route path="/:coinId" element={<Coin />}></Route>
         <Route path="/:coinId/*" element={<Coin />} />
