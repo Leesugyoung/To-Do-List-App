@@ -21,9 +21,10 @@ const PirceInfoDetail = styled.div`
 `;
 
 const PriceAgo = styled.div`
+  color: ${props => props.theme.textColor};
   text-align: center;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   border-bottom: 1px solid #7a7a7a;
   padding: 5px;
   @keyframes fadeIn {
@@ -38,6 +39,9 @@ const PriceAgo = styled.div`
     }
   }
   animation: fadeIn 0.5s ease-in-out;
+  span {
+    font-size: 17px;
+  }
 `;
 
 function Price({ tickersData }: { tickersData: PriceData }) {
@@ -48,28 +52,33 @@ function Price({ tickersData }: { tickersData: PriceData }) {
       </PriceInfoContainer>
       <PirceInfoDetail>
         <PriceAgo>
-          30 Minutes Ago: {tickersData.quotes.USD.percent_change_30m}%
+          30 Minutes Ago:　
+          <span>{tickersData.quotes.USD.percent_change_30m}%</span>
         </PriceAgo>
         <PriceAgo>
-          1 Hours Ago: {tickersData.quotes.USD.percent_change_1h}%
+          1 Hours Ago:　<span>{tickersData.quotes.USD.percent_change_1h}%</span>
         </PriceAgo>
         <PriceAgo>
-          6 Hours Ago: {tickersData.quotes.USD.percent_change_1h}%
+          6 Hours Ago:　
+          <span>{tickersData.quotes.USD.percent_change_1h}%</span>
         </PriceAgo>
         <PriceAgo>
-          12 Hours Ago: {tickersData.quotes.USD.percent_change_12h}%
+          12 Hours Ago:　
+          <span>{tickersData.quotes.USD.percent_change_12h}%</span>
         </PriceAgo>
         <PriceAgo>
-          24 Hours Ago: {tickersData.quotes.USD.percent_change_24h}%
+          24 Hours Ago:　
+          <span>{tickersData.quotes.USD.percent_change_24h}%</span>
         </PriceAgo>
         <PriceAgo>
-          7 Days Ago: {tickersData.quotes.USD.percent_change_7d}%
+          7 Days Ago:　<span>{tickersData.quotes.USD.percent_change_7d}%</span>
         </PriceAgo>
         <PriceAgo>
-          30 Days Ago: {tickersData.quotes.USD.percent_change_30d}%
+          30 Days Ago:　
+          <span>{tickersData.quotes.USD.percent_change_30d}%</span>
         </PriceAgo>
         <PriceAgo>
-          1 Years Ago: {tickersData.quotes.USD.percent_change_1y}%
+          1 Years Ago:　<span>{tickersData.quotes.USD.percent_change_1y}%</span>
         </PriceAgo>
       </PirceInfoDetail>
     </>
