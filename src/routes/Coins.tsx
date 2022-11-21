@@ -23,17 +23,18 @@ const Header = styled.header`
 
 const Desc = styled.p`
   margin-top: 20px;
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.listTextColor};
   font-size: 13px;
 `;
 
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: #ffffff;
-  color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.cardBgColor};
+  color: ${props => props.theme.listTextColor};
   border-radius: 15px;
   margin-bottom: 10px;
+  border: 1px solid white;
   a {
     display: flex;
     align-items: center;
@@ -48,7 +49,7 @@ const Coin = styled.li`
 `;
 
 const Title = styled.h1`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.accentColor};
   font-size: 50px;
   font-weight: bold;
 `;
@@ -94,9 +95,7 @@ function Coins() {
           <title>Crypto Tracker</title>
         </Helmet>
         <Header>
-          <Title>
-            <span style={{ color: "#fcff9d" }}>🪙Crypto</span> Tracker
-          </Title>
+          <Title>🪙Crypto Tracker</Title>
           <Desc>Choose your coin out of a total of 100 cryptocurrencies!</Desc>
         </Header>
         {isLoading ? (

@@ -44,6 +44,9 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  span {
+    color: ${props => props.theme.listTextColor};
+  }
   span:first-child {
     font-size: 10px;
     font-weight: 400;
@@ -56,6 +59,7 @@ const Description = styled.p`
   margin: 20px 0px;
   text-align: center;
   line-height: 20px;
+  color: ${props => props.theme.listTextColor};
 `;
 
 const Tabs = styled.div`
@@ -74,7 +78,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   padding: 7px 0px;
   border-radius: 10px;
   color: ${props =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+    props.isActive ? props.theme.accentColor : props.theme.listTextColor};
   a {
     display: block;
   }
@@ -231,7 +235,7 @@ function Coin() {
               </OverviewItem>
               <OverviewItem>
                 <span>🪙Price</span>
-                <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
+                <span>${tickersData?.quotes?.USD?.price?.toFixed(3)}</span>
               </OverviewItem>
             </Overview>
             <Description>{infoData?.description}</Description>
