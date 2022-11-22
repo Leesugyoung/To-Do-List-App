@@ -21,7 +21,7 @@ const PirceInfoDetail = styled.div`
 `;
 
 const PriceAgo = styled.div`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.listTextColor};
   text-align: center;
   font-weight: 400;
   font-size: 13px;

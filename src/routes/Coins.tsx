@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
+import { isDarkAtom } from "../atoms";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -48,6 +50,22 @@ const Coin = styled.li`
   }
 `;
 
+const ToggleBtn = styled.p`
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  background-color: #e4e6ed;
+  border-radius: 50%;
+  a {
+    position: absolute;
+    top: 5px;
+    left: 3px;
+  }
+`;
+
 const Title = styled.h1`
   color: ${props => props.theme.accentColor};
   font-size: 50px;
@@ -56,6 +74,7 @@ const Title = styled.h1`
 
 const Loader = styled.div`
   text-align: center;
+  color: ${props => props.theme.listTextColor};
 `;
 
 const Img = styled.img`
@@ -75,6 +94,9 @@ interface ICoin {
 }
 
 function Coins() {
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom(prev => !prev);
   const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
   /* react query 사용 전 코드 
   const [coins, setCoins] = useState<ICoin[]>([]);
@@ -89,6 +111,16 @@ function Coins() {
   }, []); */
   return (
     <>
+      {isDark ? (
+        <ToggleBtn onClick={toggleDarkAtom}>
+          <Link to="/">☀️</Link>
+        </ToggleBtn>
+      ) : (
+        <ToggleBtn onClick={toggleDarkAtom}>
+          <Link to="/">🌙</Link>
+        </ToggleBtn>
+      )}
+
       <Container>
         <Helmet>
           {/* react-helmet 사용 */}
