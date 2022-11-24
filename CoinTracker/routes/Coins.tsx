@@ -120,7 +120,6 @@ function Coins() {
           <Link to="/">🌙</Link>
         </ToggleBtn>
       )}
-
       <Container>
         <Helmet>
           {/* react-helmet 사용 */}

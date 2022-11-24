@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "../atoms";
+import { isDarkAtom } from "../../src/atoms";
 
 interface IHistorical {
   time_open: string;
@@ -57,6 +57,8 @@ function Chart({ coinId }: ChartProps) {
               show: false,
             },
             xaxis: {
+              axisBorder: { show: false },
+              axisTicks: { show: false },
               labels: {
                 show: false,
               },
