@@ -1,6 +1,7 @@
-import { useRecoilValue } from "recoil";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { toDostate } from "./atoms";
+import { Categories, categoryState, toDoSelector, toDostate } from "./atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
@@ -121,20 +122,26 @@ const ToDoh1 = styled.h1`
 `;
 
 function TodoList() {
-  const toDos = useRecoilValue(toDostate);
+  const toDos = useRecoilValue(toDoSelector);
+  // → return 값 배열 잊지말자/ atom or selector 의 값만 반환한다.
+  const [category, setCategory] = useRecoilState(categoryState);
+  // → 값과 더불어 modifier 함수도 제공
+  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
+    setCategory(event.currentTarget.value as any);
+  };
   return (
     <ToDoListDiv>
       <ToDoh1>📝 To Dos</ToDoh1>
       <hr />
+      <select value={category} onInput={onInput}>
+        <option value={Categories.TO_DO}>To Do</option>
+        <option value={Categories.DOING}>Doing</option>
+        <option value={Categories.DONE}>Done</option>
+      </select>
       <CreateToDo />
-      <ul>
-        {toDos.map(toDo => (
-          <ToDo key={toDo.id} {...toDo} />
-          // → text={toDo.text} category={toDo.category} id={toDo.id}
-          // → toDos 배열의 toDo 원소가 하나하나가
-          // ToDo 컴포넌트에 필요한 prop 과 같은 모양이므로 가능하다!
-        ))}
-      </ul>
+      {toDos?.map(toDo => (
+        <ToDo key={toDo.id} {...toDo} />
+      ))}
     </ToDoListDiv>
   );
 }
