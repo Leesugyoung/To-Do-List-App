@@ -7,3 +7,11 @@ export const darkTheme: DefaultTheme = {
   cardBgColor: "transparent",
   listTextColor: "whitesmoke",
 };
+
+export const lightTheme: DefaultTheme = {
+  bgColor: "whitesmoke",
+  textColor: "black",
+  accentColor: "#9acd32",
+  cardBgColor: "white",
+  listTextColor: "black",
+};
