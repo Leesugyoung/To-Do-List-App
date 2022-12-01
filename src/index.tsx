@@ -60,8 +60,9 @@ const GlobalStyle = createGlobalStyle`
   }
   body{
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: black;
-    color: white;
+    background-color: ${props => props.theme.bgColor};
+    color: black;
+    line-height: 1.2;
   }
   a {
     text-decoration: none;
