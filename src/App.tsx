@@ -1,8 +1,10 @@
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
+import { json } from "stream/consumers";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
 import Board from "./Components/Board";
+import React, { useEffect } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,25 +31,6 @@ const Boards = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  /* const onDragend = ({ draggableId, destination, source }: DropResult) => {
-    // → 드래그가 끝났을 때 실행되는 함수
-    if (!destination) return;
-    // → 유저가 같은 자리에 dnd 했을 경우에는 종료
-     setToDos(oldToDos => {
-      const toDosCopy = [...oldToDos];
-      // 1) Delete item on source.index
-      // console.log("Delete item on", source.index);
-      // console.log(toDosCopy);
-      toDosCopy.splice(source.index, 1);
-      // console.log("Deleted item");
-      // console.log(toDosCopy);
-      // 2) Put back the item on the destination.index
-      // console.log("Put back", draggableId, "on ", destination.index);
-      toDosCopy.splice(destination?.index, 0, draggableId);
-      // console.log(toDosCopy);
-      return toDosCopy;
-    }); 
-  }; */
   const onDragEnd = (info: DropResult) => {
     const { destination, draggableId, source } = info;
     if (!destination) return;
@@ -61,11 +44,13 @@ function App() {
         boardCopy.splice(source.index, 1);
         boardCopy.splice(destination?.index, 0, taskObj);
         // 3. to do obj 를 다시 넣어준다.
-        return {
+        console.log("같은보드에서 움직일때", taskObj);
+        const result = {
           ...allBoards,
           [source.droppableId]: boardCopy,
           // "doing" : boardCopy
         };
+        return result;
       });
     }
     if (destination.droppableId !== source.droppableId) {
@@ -76,11 +61,13 @@ function App() {
         const destinationBoard = [...allBoards[destination.droppableId]];
         sourceBoard.splice(source.index, 1);
         destinationBoard.splice(destination?.index, 0, taskObj);
-        return {
+        const result = {
           ...allBoards,
           [source.droppableId]: sourceBoard,
           [destination.droppableId]: destinationBoard,
         };
+        localStorage.setItem("TRELLO", JSON.stringify(result));
+        return result;
       });
     }
   };

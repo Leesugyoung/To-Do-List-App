@@ -65,10 +65,11 @@ function Board({ toDos, boardId }: IBoardProps) {
       text: toDo,
     };
     SetToDos(allBoards => {
-      return {
+      const result = {
         ...allBoards,
         [boardId]: [newToDo, ...allBoards[boardId]],
       };
+      return result;
     });
     setValue("toDo", "");
   };
@@ -100,6 +101,7 @@ function Board({ toDos, boardId }: IBoardProps) {
                 index={index}
                 toDoId={toDo.id}
                 toDoText={toDo.text}
+                boardId={boardId}
               />
             ))}
             {magic.placeholder}

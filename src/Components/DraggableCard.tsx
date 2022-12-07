@@ -1,28 +1,53 @@
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import React from "react";
-import { Snapshot } from "recoil";
+import { Snapshot, useRecoilState, useSetRecoilState } from "recoil";
+import { IToDo, toDoState, IToDoState } from "../atoms";
 
 const Card = styled.div<{ isDragging: boolean }>`
   border-radius: 5px;
   margin-bottom: 5px;
   padding: 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
   background-color: ${props =>
     props.isDragging ? "#d4eaff" : props.theme.cardColor};
   box-shadow: ${props =>
     props.isDragging ? "2px 0px 5px rgba(0, 0, 0, 0.05)" : "none"};
+  span:last-child {
+    font-size: 12px;
+  }
 `;
 
 interface IDragabbleCardProps {
   toDoId: number;
   toDoText: string;
   index: number;
+  boardId: string;
 }
 
-function DragabbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
+function DragabbleCard({
+  boardId,
+  toDoId,
+  toDoText,
+  index,
+}: IDragabbleCardProps) {
+  // 코드챌린지 - 리스트 삭제
+  const setTodos = useSetRecoilState(toDoState);
+  const handleDeleteTodo = (todoId: number): void => {
+    setTodos((todos: IToDoState) => {
+      const copiedTodos: IToDo[] = [...todos[boardId]];
+      const filteredTodos: IToDo[] = copiedTodos.filter(
+        (todo: IToDo) => todo.id !== todoId
+      );
+      const result = { ...todos, [boardId]: filteredTodos };
+
+      return result;
+    });
+  };
   return (
     <Draggable draggableId={toDoId + ""} index={index}>
-      {/*  number 형식인 toDoId 를 +"" 를 붙여 string 으로 변환 */}
       {(magic, snapshot) => (
         <Card
           isDragging={snapshot.isDragging}
@@ -30,7 +55,8 @@ function DragabbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
           {...magic.dragHandleProps}
           {...magic.draggableProps}
         >
-          {toDoText}
+          <span>{toDoText}</span>
+          <span onClick={() => handleDeleteTodo(toDoId)}>🗑️</span>
         </Card>
       )}
     </Draggable>
