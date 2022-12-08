@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
 
 export interface IToDo {
   id: number;
@@ -7,6 +7,7 @@ export interface IToDo {
 
 export interface IToDoState {
   [key: string]: IToDo[];
+  // obj key 를 넣으면 string[] 으로 출력
 }
 
 const localStorageEffect =

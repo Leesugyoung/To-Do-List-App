@@ -10,29 +10,45 @@ const Wrapper = styled.div`
   padding-top: 10px;
   background-color: ${props => props.theme.boardColor};
   border-radius: 5px;
+  border: 1px solid white;
   min-height: 300px;
   display: flex;
   flex-direction: column;
+  max-width: 250px;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.h2`
   text-align: center;
   font-weight: 600;
-  margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 17px;
+  color: #222222;
 `;
 
-interface IAreaProps {
-  isDraggingFromThis: boolean;
-  isDraggingOver: boolean;
-}
+const DelBoardBtn = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: 12;
+  :focus {
+    border: none;
+  }
+  :hover {
+    cursor: pointer;
+  }
+`;
 
 const Area = styled.div<IAreaProps>`
   background-color: ${props =>
     props.isDraggingOver // board 위에 있을때
-      ? "#b8c2c7"
+      ? "#f6ddf8"
       : props.isDraggingFromThis // board 떠날때
-      ? "#dfe6e9"
+      ? "#f9e8fb"
       : "trnspernent"};
   flex-grow: 1;
   transition: background-color 0.3s ease-in-out;
@@ -41,9 +57,20 @@ const Area = styled.div<IAreaProps>`
 `;
 
 const Form = styled.form`
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
   input {
     width: 100%;
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #1f1f1f;
+    text-align: center;
+    height: 25px;
+  }
+  input:focus {
+    outline: none;
   }
 `;
 
@@ -54,6 +81,11 @@ interface IBoardProps {
 
 interface IFrom {
   toDo: string;
+}
+
+interface IAreaProps {
+  isDraggingFromThis: boolean;
+  isDraggingOver: boolean;
 }
 
 function Board({ toDos, boardId }: IBoardProps) {
@@ -73,9 +105,22 @@ function Board({ toDos, boardId }: IBoardProps) {
     });
     setValue("toDo", "");
   };
+  // -- 코드챌린지 - board 삭제하기
+  const deleteBoard = () => {
+    SetToDos(allBoards => {
+      const copyBoards = { ...allBoards };
+      delete copyBoards[boardId];
+      return { ...copyBoards };
+    });
+  };
   return (
     <Wrapper>
-      <Title>{boardId}</Title>
+      <TitleWrapper>
+        <Title>{boardId}</Title>
+        {boardId !== "To Do" && boardId !== "Doing" && boardId !== "Done" && (
+          <DelBoardBtn onClick={deleteBoard}>❌</DelBoardBtn>
+        )}
+      </TitleWrapper>
       <Form onSubmit={handleSubmit(onValid)}>
         <input
           {...register("toDo", { required: true })}
@@ -104,6 +149,7 @@ function Board({ toDos, boardId }: IBoardProps) {
                 boardId={boardId}
               />
             ))}
+
             {magic.placeholder}
           </Area>
         )}

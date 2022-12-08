@@ -1,23 +1,28 @@
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import React from "react";
-import { Snapshot, useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { IToDo, toDoState, IToDoState } from "../atoms";
 
 const Card = styled.div<{ isDragging: boolean }>`
   border-radius: 5px;
   margin-bottom: 5px;
-  padding: 10px 10px;
+  padding: 8px 8px;
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
   background-color: ${props =>
-    props.isDragging ? "#d4eaff" : props.theme.cardColor};
+    props.isDragging ? "#abd7f5" : props.theme.cardColor};
   box-shadow: ${props =>
     props.isDragging ? "2px 0px 5px rgba(0, 0, 0, 0.05)" : "none"};
-  span:last-child {
-    font-size: 12px;
-  }
+`;
+
+const CardText = styled.span`
+  font-size: 13px;
+  color: #222222;
+`;
+
+const CardDelBtn = styled.span`
+  font-size: 12px;
 `;
 
 interface IDragabbleCardProps {
@@ -41,9 +46,7 @@ function DragabbleCard({
       const filteredTodos: IToDo[] = copiedTodos.filter(
         (todo: IToDo) => todo.id !== todoId
       );
-      const result = { ...todos, [boardId]: filteredTodos };
-
-      return result;
+      return { ...todos, [boardId]: filteredTodos };
     });
   };
   return (
@@ -55,8 +58,8 @@ function DragabbleCard({
           {...magic.dragHandleProps}
           {...magic.draggableProps}
         >
-          <span>{toDoText}</span>
-          <span onClick={() => handleDeleteTodo(toDoId)}>🗑️</span>
+          <CardText>{toDoText}</CardText>
+          <CardDelBtn onClick={() => handleDeleteTodo(toDoId)}>🗑️</CardDelBtn>
         </Card>
       )}
     </Draggable>

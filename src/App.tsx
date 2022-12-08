@@ -1,19 +1,26 @@
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
-import { json } from "stream/consumers";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
 import Board from "./Components/Board";
-import React, { useEffect } from "react";
+import AddBoard from "./Components/AddBoard";
+import { Helmet } from "react-helmet";
+
+const TitleWrapper = styled.div`
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Wrapper = styled.div`
   display: flex;
-  max-width: 680px;
+  max-width: 1200px;
   width: 100vw;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 91vh;
 `;
 
 const Boards = styled.div`
@@ -66,7 +73,6 @@ function App() {
           [source.droppableId]: sourceBoard,
           [destination.droppableId]: destinationBoard,
         };
-        localStorage.setItem("TRELLO", JSON.stringify(result));
         return result;
       });
     }
@@ -74,6 +80,12 @@ function App() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <Helmet>
+        <title>To Do List📝</title>
+      </Helmet>
+      <TitleWrapper>
+        <AddBoard />
+      </TitleWrapper>
       <Wrapper>
         <Boards>
           {Object.keys(toDos).map(boardId => (
