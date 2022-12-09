@@ -65,7 +65,7 @@ function AddBoard() {
         <input
           {...register("category")}
           type="text"
-          placeholder="Add To Caterogy 📝"
+          placeholder="Add To Category 📝"
         />
         <AddBtn>
           <div>➕</div>
