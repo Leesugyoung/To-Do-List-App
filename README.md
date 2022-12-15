@@ -13,7 +13,6 @@
 
 - 언어 : ES6, TypeScript
 - 프론트 : React
-- 백엔드 : Session
 - 배포 : Github pages
 - 라이브러리 : npm, Recoil, styled-components, React-beautiful-dnd
 
@@ -27,6 +26,7 @@
 - Card(todo list)
     - Category 별 카드 추가 및 삭제 기능
 - 공통
+    - React-beautiful-dnd 를 사용한 드래그 앤 드롭 기능
     - Session 을 통한 Board, Card 추가 및 삭제 기능
 
 ------------
