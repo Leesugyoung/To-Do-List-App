@@ -14,7 +14,7 @@
 - 언어 : ES6, TypeScript
 - 프론트 : React
 - 백엔드 : Session
-- 배포 : Github
+- 배포 : Github pages
 - 라이브러리 : npm, Recoil, styled-components, React-beautiful-dnd
 
 ------------
