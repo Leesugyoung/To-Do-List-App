@@ -25,9 +25,10 @@
     - Category 추가 기능
 - Card(todo list)
     - Category 별 카드 추가 및 삭제 기능
-- 공통
+- 그 외
     - React-beautiful-dnd 를 사용한 드래그 앤 드롭 기능
     - Session 을 통한 Board, Card 추가 및 삭제 기능
+    - Reocil 상태관리 라이브러리를 활용한 state 관리
 
 ------------
 
