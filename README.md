@@ -1,5 +1,5 @@
 # Todo List App 
-####(Trello + Kanban Board 클론코딩)
+###(Trello + Kanban Board 클론코딩)
 
 리액트로 제작한 Todo List App 입니다.
 
